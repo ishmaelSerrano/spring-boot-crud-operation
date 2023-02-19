@@ -1,0 +1,80 @@
+import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
+
+plugins {
+    id 'application'
+    id "org.jetbrains.kotlin.jvm" version "1.6.20"
+    id 'io.spring.dependency-management' version "1.0.11.RELEASE"
+    id 'org.springframework.boot' version '2.6.1'
+    id 'com.palantir.docker' version '0.31.0'
+    id 'com.palantir.docker-run' version '0.31.0'
+}
+
+apply plugin: "application"
+apply plugin: "kotlin"
+
+version = "0.0.1"
+
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.boot:spring-boot-starter-actuator"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+    implementation "org.springframework.boot:spring-boot-devtools"
+    implementation "com.fasterxml.jackson.module:jackson-module-kotlin:2.13.+"
+    implementation "org.jetbrains.kotlin:kotlin-reflect"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+
+    implementation("com.h2database:h2:2.1.212")
+
+    compileOnly 'org.projectlombok:lombok:1.18.12'
+    annotationProcessor 'org.projectlombok:lombok:1.18.12'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.5'
+    testImplementation group: 'org.springframework.boot', name: 'spring-boot-test-autoconfigure', version: '3.0.2'
+    testImplementation  'org.springframework.boot:spring-boot-test-autoconfigure:2.7.7'
+    testImplementation "junit:junit:4.11"
+
+}
+
+test{
+    useJUnitPlatform()
+}
+
+/*tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+*/
+String imageName= "ismaelcontrast/spring-boot-app:$version"
+docker {
+    name imageName
+    files "build/libs/${bootJar.archiveFileName.get()}"
+    buildArgs([JAR_FILE: bootJar.archiveFileName.get()])
+    tag 'DockerHub', "ismaelcontrast/spring-boot-docker-example:$version"
+}
+
+
+
+String group = "999"
+dockerRun {
+    name 'spring-boot-app'
+    image imageName
+    ports '8888:8888'
+    clean true
+  //  daemonize false
+   // arguments '-v', '/var/run/docker.sock:/var/run/docker.sock', '--group-add', group
+}
+
+/*
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(11)
+    }
+}*/
+
+

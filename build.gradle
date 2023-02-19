@@ -55,7 +55,7 @@ docker {
     name imageName
     files "build/libs/${bootJar.archiveFileName.get()}"
     buildArgs([JAR_FILE: bootJar.archiveFileName.get()])
-    tag 'DockerHub', "ismaelcontrast/spring-boot-docker-example:$version"
+    tag 'DockerHub', "ismaelcontrast/spring-boot-crud-operation:$version"
 }
 
 

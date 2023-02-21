@@ -1,53 +1,37 @@
 package com.ishmael.springbootcrudoperation.controller;
 
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-import com.ishmael.springbootcrudoperation.model.Books;
-import com.ishmael.springbootcrudoperation.service.BooksService;
-//mark class as Controller
+import com.ishmael.springbootcrudoperation.entity.Books;
+import com.ishmael.springbootcrudoperation.repository.BooksRepository;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+
+import org.springframework.web.server.ResponseStatusException;
+
+import javax.validation.Valid;
+
 @RestController
 public class BooksController
 {
-    //autowire the BooksService class
-    @Autowired
-    BooksService booksService;
-    //creating a get mapping that retrieves all the books detail from the database
-    @GetMapping("/book")
-    private List<Books> getAllBooks()
-    {
-        return booksService.getAllBooks();
+
+    private final BooksRepository booksRepository;
+    public BooksController(BooksRepository booksRepository) {
+        this.booksRepository = booksRepository;
     }
-    //creating a get mapping that retrieves the detail of a specific book
-    @GetMapping("/book/{bookid}")
-    private Books getBooks(@PathVariable("bookid") int bookid)
-    {
-        return booksService.getBooksById(bookid);
+
+    @GetMapping(value = "/book", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Iterable<Books> getBooks() {
+        return booksRepository.findAll();
     }
-    //creating a delete mapping that deletes a specified book
-    @DeleteMapping("/book/{bookid}")
-    private void deleteBook(@PathVariable("bookid") int bookid)
-    {
-        booksService.delete(bookid);
+    @GetMapping(value = "/book/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Books getBooks(@PathVariable long id){
+        return booksRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Invalid book id %s", id)));
     }
-    //creating post mapping that post the book detail in the database
-    @PostMapping("/books")
-    private int saveBook(@RequestBody Books books)
-    {
-        booksService.saveOrUpdate(books);
-        return books.getBookid();
+
+
+    @PostMapping(value = "/books", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public Books createBook(@Valid @RequestBody Books books) {
+        return booksRepository.save(books);
     }
-    //creating put mapping that updates the book detail
-    @PutMapping("/books")
-    private Books update(@RequestBody Books books)
-    {
-        booksService.saveOrUpdate(books);
-        return books;
-    }
+
 }

@@ -1,47 +1,46 @@
 package com.ishmael.springbootcrudoperation;
 
 
-import com.ishmael.springbootcrudoperation.model.Books;
-import com.ishmael.springbootcrudoperation.repository.BooksRepository;
-import com.ishmael.springbootcrudoperation.service.BooksService;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.util.Collections;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
-
+@ExtendWith( SpringExtension.class)
 @SpringBootTest
+@AutoConfigureMockMvc
 class SpringBootCrudOperationApplicationTests {
 
-	private static final int ID = 1;
-	private static final String NAME = "NAME";
-
-	@InjectMocks
-	private BooksService booksService;
-
-	@Mock
-	private BooksRepository booksRepositoryMock;
-
+	@Autowired
+	private MockMvc mockMvc;
 
 	@Test
 	public void getAllBooks() throws Exception {
-		Books books = new Books();
-		books.setBookid(982);
-		books.setAuthor("E. Balagurusamy");
-		books.setBookname("Programming with Java");
-		books.setPrice(350);
-		List<Books> booksList = Collections.singletonList(books);
-		when(booksRepositoryMock.findAll()).thenReturn(booksList);
-		//When
-		//Then
-		assertEquals(books, booksService.getAllBooks().get(0));
+		mockMvc.perform(MockMvcRequestBuilders.get("/book")
+						.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andReturn();
 	}
-/*
+
+	@Test
+	public void saveBook() throws Exception {
+		String newBook = "{\"bookname\":\"Programming with Java.\",\"author\":\"E. Balagurusamy\",\"price\":350}";
+	//	String newBook = "{\"bookid\":982,\"bookname\":\"Programming with Java.\",\"author\":\"E. Balagurusamy\",\"price\":1}";
+		mockMvc.perform(MockMvcRequestBuilders.post("/books")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(newBook)
+						.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andReturn();
+	}
+
 	@Test
 	public void getsSingleBook() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders.get("/book/1")
@@ -58,16 +57,7 @@ class SpringBootCrudOperationApplicationTests {
 				.andReturn();
 	}
 
-	@Test
-	public void addsNewRide() throws Exception {
-		String newRide = "{\"bookid\":\"0982\",\"bookname\":\"Programming with Java\",\"author\":E. Balagurusamy,\"price\":350}";
-		mockMvc.perform(MockMvcRequestBuilders.post("/books")
-						.contentType(MediaType.APPLICATION_JSON)
-						.content(newRide)
-						.accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().isOk())
-				.andReturn();
-	}
-*/
+
+
 
 }

@@ -55,7 +55,7 @@ String group = "999"
 dockerRun {
     name 'spring-boot-operation'
     image imageName
-    ports '8888:8888'
+    ports '8080:8080'
     clean true
   //  daemonize false
    // arguments '-v', '/var/run/docker.sock:/var/run/docker.sock', '--group-add', group

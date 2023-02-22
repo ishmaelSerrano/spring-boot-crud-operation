@@ -29,10 +29,10 @@ class SpringBootCrudOperationApplicationTests {
 				.andReturn();
 	}
 
+
 	@Test
-	public void saveBook() throws Exception {
+	public void getSaveBook() throws Exception {
 		String newBook = "{\"bookname\":\"Programming with Java.\",\"author\":\"E. Balagurusamy\",\"price\":350}";
-	//	String newBook = "{\"bookid\":982,\"bookname\":\"Programming with Java.\",\"author\":\"E. Balagurusamy\",\"price\":1}";
 		mockMvc.perform(MockMvcRequestBuilders.post("/books")
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(newBook)

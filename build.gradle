@@ -39,25 +39,21 @@ test{
     useJUnitPlatform()
 }
 
-/*tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-}
-*/
-String imageName= "ismaelcontrast/spring-boot-app:$version"
+String dockerHubUsernameProperty = findProperty('dockerHubUsername') ?: 'ismaelcontrast'
+String imageName = "${dockerHubUsernameProperty}/spring-boot-crud-operation:$version"
+//String imageName= "ismaelcontrast/spring-boot-app:$version"
 docker {
     name imageName
     files "build/libs/${bootJar.archiveFileName.get()}"
     buildArgs([JAR_FILE: bootJar.archiveFileName.get()])
-    tag 'DockerHub', "ismaelcontrast/spring-boot-crud-operation:$version"
+    tag 'DockerHub', imageName
 }
 
 
 
 String group = "999"
 dockerRun {
-    name 'spring-boot-app'
+    name 'spring-boot-operation'
     image imageName
     ports '8888:8888'
     clean true
@@ -65,6 +61,16 @@ dockerRun {
    // arguments '-v', '/var/run/docker.sock:/var/run/docker.sock', '--group-add', group
 }
 
+cloudFormation {
+    stackName "$project.name-stack"
+    stackParams([
+            SubnetID: findProperty('subnetId') ?: '',
+            ServiceName: project.name,
+            ServiceVersion: project.version,
+            DockerHubUsername: "ismaelcontrast"
+    ])
+    templateFile project.file("ecs.yml")
+}
 
 java {
     toolchain {

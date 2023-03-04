@@ -18,6 +18,8 @@ repositories {
 
 }
 
+processResources.dependsOn('frontend-books:build')
+
 dependencies {
     implementation "org.springframework.boot:spring-boot-starter-web"
     implementation 'org.springframework.boot:spring-boot-starter-validation'
@@ -76,6 +78,27 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(11)
     }
+}
+
+
+jar {
+    enabled = false
+    classifier = ''
+    manifest {
+        attributes  'Main-Class': 'com.ishmael.springbootcrudoperation.SpringBootCrudOperationApplication'
+
+    }
+    baseName = 'spring-angular'
+    version = '0.0.1-SNAPSHOT'
+    from('frontend-books/dist') {
+        into 'public'
+    }
+}
+
+
+
+bootJar {
+    enabled = true
 }
 
 

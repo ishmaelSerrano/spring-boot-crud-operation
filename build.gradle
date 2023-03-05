@@ -18,7 +18,7 @@ repositories {
 
 }
 
-processResources.dependsOn('frontend-books:build')
+processResources.dependsOn('frontend:build')
 
 dependencies {
     implementation "org.springframework.boot:spring-boot-starter-web"
@@ -89,7 +89,7 @@ jar {
     }
     baseName = 'spring-angular'
     version = '0.0.1-SNAPSHOT'
-    from('frontend-books/dist') {
+    from('frontend/dist') {
         into 'public'
     }
 }

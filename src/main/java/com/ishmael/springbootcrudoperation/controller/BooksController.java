@@ -22,9 +22,6 @@ public class BooksController
     @Autowired
     BooksRepository booksRepository;
 
-   /* public BooksController(BooksRepository booksRepository) {
-        this.booksRepository = booksRepository;
-    }*/
 
 
     @GetMapping("/book")

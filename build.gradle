@@ -43,7 +43,7 @@ test{
 
 String dockerHubUsernameProperty = findProperty('dockerHubUsername') ?: 'ismaelcontrast'
 String imageName = "${dockerHubUsernameProperty}/spring-boot-crud-operation:$version"
-//String imageName= "ismaelcontrast/spring-boot-app:$version"
+
 docker {
     name imageName
     files "build/libs/${bootJar.archiveFileName.get()}"

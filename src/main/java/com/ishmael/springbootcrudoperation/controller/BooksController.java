@@ -11,9 +11,11 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequestMapping("/api")
 public class BooksController
@@ -58,6 +60,31 @@ public class BooksController
         }
 
 
+    }
+
+    @PutMapping("/books/{id}")
+    public ResponseEntity<Books> updateBook(@PathVariable("id") long id, @RequestBody Books book) {
+        Optional<Books> bookData = booksRepository.findById(id);
+
+        if (bookData.isPresent()) {
+            Books _book = bookData.get();
+            _book.setBookname(book.getBookname());
+            _book.setAuthor(book.getAuthor());
+            _book.setPrice(book.getPrice());
+            return new ResponseEntity<>(booksRepository.save(_book), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @DeleteMapping("/books/{id}")
+    public ResponseEntity<HttpStatus> deleteBook(@PathVariable("id") long id) {
+        try {
+            booksRepository.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }

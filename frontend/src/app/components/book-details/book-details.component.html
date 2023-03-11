@@ -1,6 +1,6 @@
 <div *ngIf="viewMode; else editable">
   <div *ngIf="currentBook.id">
-    <h4>Tutorial</h4>
+    <h4>Book</h4>
     <div>
       <label><strong>Book Name:</strong></label> {{ currentBook.bookname }}
     </div>
@@ -23,13 +23,13 @@
 
   <div *ngIf="!currentBook">
     <br />
-    <p>Please click on a Tutorial...</p>
+    <p>Please click on a Book...</p>
   </div>
 </div>
 
 <ng-template #editable>
   <div *ngIf="currentBook.id" class="edit-form">
-    <h4>Tutorial</h4>
+    <h4>Book</h4>
     <form>
       <div class="form-group">
         <label for="title">Title</label>
@@ -42,36 +42,27 @@
         />
       </div>
       <div class="form-group">
-        <label for="description">Description</label>
+        <label for="author">Author</label>
         <input
           type="text"
           class="form-control"
-          id="description"
+          id="author"
           [(ngModel)]="currentBook.author"
-          name="description"
+          name="author"
         />
       </div>
 
       <div class="form-group">
-        <label><strong>Status:</strong></label>
-        {{ currentBook.price}}
+        <label for="price">Price</label>
+        <input
+                type="text"
+                class="form-control"
+                id="price"
+                [(ngModel)]="currentBook.price"
+                name="price"
+        />
       </div>
     </form>
-
-    <button
-      class="badge badge-primary mr-2"
-      *ngIf="currentBook.price"
-      (click)="updatePrice(40)"
-    >
-      UnPublish
-    </button>
-    <button
-      *ngIf="!currentBook.price"
-      class="badge badge-primary mr-2"
-      (click)="updatePrice(15)"
-    >
-      Publish
-    </button>
 
     <button class="badge badge-danger mr-2" (click)="deleteBook()">
       Delete

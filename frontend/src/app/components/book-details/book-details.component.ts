@@ -81,7 +81,7 @@ export class BookDetailsComponent implements OnInit {
       .subscribe({
         next: (res) => {
           console.log(res);
-          this.router.navigate(['/tutorials']);
+          this.router.navigate(['/books']);
         },
         error: (e) => console.error(e)
       });

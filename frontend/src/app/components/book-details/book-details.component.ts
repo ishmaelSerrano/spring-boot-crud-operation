@@ -77,11 +77,11 @@ export class BookDetailsComponent implements OnInit {
   }
 
   deleteBook(): void {
-    this.bookService.delete(this.bookService.id)
+    this.bookService.delete(this.currentBook.id)
       .subscribe({
         next: (res) => {
           console.log(res);
-          this.router.navigate(['/books']);
+          this.router.navigate(['/book']);
         },
         error: (e) => console.error(e)
       });

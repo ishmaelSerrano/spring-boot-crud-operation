@@ -15,7 +15,7 @@ import java.util.Optional;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api")
 public class BooksController
@@ -65,7 +65,6 @@ public class BooksController
     @PutMapping("/books/{id}")
     public ResponseEntity<Books> updateBook(@PathVariable("id") long id, @RequestBody Books book) {
         Optional<Books> bookData = booksRepository.findById(id);
-
         if (bookData.isPresent()) {
             Books _book = bookData.get();
             _book.setBookname(book.getBookname());
@@ -83,6 +82,7 @@ public class BooksController
             booksRepository.deleteById(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
+            System.out.println("inside catch: "+ e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

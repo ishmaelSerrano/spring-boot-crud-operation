@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   backend:
-    image: ismaelcontrast/spring-boot-crud-operation:0.0.1
+    image: ismaelcontrast/spring-boot-crud-operation:0.0.3
     container_name: spring-boot-operation
     build:
       context: ./

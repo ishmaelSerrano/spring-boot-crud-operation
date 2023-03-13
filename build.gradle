@@ -10,7 +10,7 @@ plugins {
     id 'jp.classmethod.aws.reboot.cloudformation' version '0.45'
 }
 
-version = "0.0.1"
+version = "0.0.2"
 
 
 repositories {
@@ -32,8 +32,8 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.12'
     annotationProcessor 'org.projectlombok:lombok:1.18.12'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
     testImplementation "junit:junit:4.11"
+
 
 }
 
@@ -80,7 +80,6 @@ java {
     }
 }
 
-
 jar {
 
     manifest {
@@ -88,8 +87,8 @@ jar {
 
     }
     baseName = 'spring-angular'
-    version = '0.0.1-SNAPSHOT'
-    from('frontend/dist') {
+    version = '0.0.2-SNAPSHOT'
+    from('frontend/dist/angular-frontend-books') {
         into 'public'
     }
 }

@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.ishmael</groupId>
 	<artifactId>spring-boot-crud-operation</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<name>spring-boot-crud-operation</name>
 	<description>crud</description>
 	<properties>

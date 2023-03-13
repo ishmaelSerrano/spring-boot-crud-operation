@@ -10,7 +10,7 @@ plugins {
     id 'jp.classmethod.aws.reboot.cloudformation' version '0.45'
 }
 
-version = "0.0.2"
+version = "0.0.3"
 
 
 repositories {
@@ -87,7 +87,7 @@ jar {
 
     }
     baseName = 'spring-angular'
-    version = '0.0.2-SNAPSHOT'
+    version = '0.0.3-SNAPSHOT'
     from('frontend/dist/angular-frontend-books') {
         into 'public'
     }

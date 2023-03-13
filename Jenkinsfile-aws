@@ -15,8 +15,8 @@ pipeline {
 
             steps {
                 // Authenticate Docker with AWS ECR
-                withCredentials([usernamePassword(credentialsId: 'aws-ecr-creds', usernameVariable: 'AWS_ACCESS_KEY', passwordVariable: 'AWS_SECRET_KEY')]) {
-                    sh 'aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com'
+                withAWS(credentials: 'aws-credentials', region: env.AWS_REGION, env.AWS_ACCESS_KEY, env.AWS_SECRET_KEY) {
+                    sh 'aws ecr get-login-password --region env.AWS_REGION | docker login --username AWS --password-stdin env.AWS_ACCOUNT_ID.dkr.ecr.env.AWS_REGION.amazonaws.com'
                 }
 
                 // Build Docker image

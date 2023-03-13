@@ -1,42 +1,35 @@
 pipeline {
     agent any
 
-    triggers {
-        pollSCM '* * * * *'
-    }
     stages {
-        stage('Build') {
-            steps {
-                sh './gradlew assemble'
-            }
-        }
-        stage('Test') {
-            steps {
-                sh './gradlew test'
-            }
-        }
-        stage('Build Docker image') {
-            steps {
-                sh './gradlew docker'
-            }
-        }
-        stage('Push Docker image') {
+
+
+        stage('Deploy') {
             environment {
-                DOCKER_HUB_LOGIN = credentials('docker-hub')
+                // Set environment variables for AWS ECS deployment
+                AWS_REGION = 'us-east-1'
+                ECS_CLUSTER = 'deployment-springboot-angular-cluster'
+                ECS_SERVICE = 'springboot-angular-service'
+                IMAGE_TAG = sh(returnStdout: true, script: 'echo $BUILD_NUMBER').trim()
             }
+
             steps {
-                sh 'docker login --username=$DOCKER_HUB_LOGIN_USR --password=$DOCKER_HUB_LOGIN_PSW'
-                sh './gradlew dockerPush -PdockerHubUsername=$DOCKER_HUB_LOGIN_USR'
-            }
-        }
-        stage('Deploy to AWS') {
-            environment {
-                DOCKER_HUB_LOGIN = credentials('docker-hub')
-            }
-            steps {
-                withAWS(credentials: 'aws-credentials', region: env.AWS_REGION) {
-                    sh './gradlew awsCfnMigrateStack awsCfnWaitStackComplete -PsubnetId=$SUBNET_ID -PdockerHubUsername=$DOCKER_HUB_LOGIN_USR'
+                // Authenticate Docker with AWS ECR
+                withCredentials([usernamePassword(credentialsId: 'aws-ecr-creds', usernameVariable: 'AKIAQMCI33QWEPENQRGN', passwordVariable: 'P0c5+D6lQdiA3yt842bmDRKR6TTGu8PfHXceTfrp')]) {
+                    sh 'aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com'
                 }
+
+                // Build Docker image
+                sh 'docker build -t spring-boot-crud-operation:0.0.1 .'
+
+                // Tag Docker image
+                sh 'docker tag spring-boot-crud-operation:0.0.1 $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/spring-boot-crud-operation:0.0.1'
+
+                // Push Docker image to AWS ECR
+                sh 'docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/spring-boot-crud-operation:0.0.1'
+
+                // Update AWS ECS service with new task definition
+                sh 'ecs deploy $ECS_CLUSTER $ECS_SERVICE --task-definition spring-boot-crud-operation:0.0.1'
             }
         }
     }

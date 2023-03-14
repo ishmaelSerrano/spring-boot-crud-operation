@@ -1,43 +1,66 @@
-pipeline {
-    agent any
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.5.5")
+        classpath("com.amazonaws:aws-java-sdk:1.11.1039")
+        classpath("org.springframework.cloud:spring-cloud-aws-messaging:2.3.2")
+        classpath("org.springframework.cloud:spring-cloud-aws-autoconfigure:2.3.2")
+    }
+}
 
-    triggers {
-        pollSCM '* * * * *'
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '2.5.5'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.cloud:spring-cloud-starter-aws'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.webjars:webjars-locator-core'
+    implementation 'org.webjars:bootstrap:4.6.0'
+    implementation 'org.webjars:jquery:3.6.0'
+    implementation 'com.amazonaws:aws-java-sdk-s3:1.11.1039'
+    implementation 'com.amazonaws:aws-java-sdk-rds:1.11.1039'
+    implementation 'com.amazonaws:aws-java-sdk-elasticbeanstalk:1.11.1039'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+bootJar {
+    baseName = 'SpringBootCrudOperationApplication'
+    version = '0.0.1-SNAPSHOT'
+}
+
+bootRun {
+    systemProperty 'spring.profiles.active', 'local'
+}
+
+task buildZip(type: Zip) {
+    from("build/libs/") {
+        include "spring-boot-crud-operation-0.0.1.jar"
     }
-    stages {
-        stage('Build') {
-            steps {
-                sh './gradlew assemble'
-            }
-        }
-        stage('Test') {
-            steps {
-                sh './gradlew test'
-            }
-        }
-        stage('Build Docker image') {
-            steps {
-                sh './gradlew docker'
-            }
-        }
-        stage('Push Docker image') {
-            environment {
-                DOCKER_HUB_LOGIN = credentials('docker-hub')
-            }
-            steps {
-                sh 'docker login --username=$DOCKER_HUB_LOGIN_USR --password=$DOCKER_HUB_LOGIN_PSW'
-                sh './gradlew dockerPush -PdockerHubUsername=$DOCKER_HUB_LOGIN_USR'
-            }
-        }
-        stage('Deploy to AWS') {
-            environment {
-                DOCKER_HUB_LOGIN = credentials('docker-hub')
-            }
-            steps {
-                withAWS(credentials: 'aws-credentials', region: env.AWS_REGION) {
-                    sh './gradlew awsCfnMigrateStack awsCfnWaitStackComplete -PsubnetId=$SUBNET_ID -PdockerHubUsername=$DOCKER_HUB_LOGIN_USR'
-                }
-            }
-        }
-    }
+    from("Dockerrun.aws.json")
+    archiveName "my-app.zip"
+}
+
+task deployToS3(type: Exec) {
+    commandLine 'aws', 's3', 'cp', 'frontend/build/dist/app.zip', 's3://spring-boot-angular/'
+}
+
+task deployToElasticBeanstalk(type: Exec) {
+    commandLine 'aws', 'elasticbeanstalk', 'create-application-version', '--application-name', 'spring-boot-crud-operation', '--version-label', '0.0.1-SNAPSHOT', '--source-bundle', 'S3Bucket=spring-boot-angular,S3Key=app.zip'
+}
+
+
+
+task deployToAWS(dependsOn: [buildZip, deployToS3, deployToElasticBeanstalk]) {
 }

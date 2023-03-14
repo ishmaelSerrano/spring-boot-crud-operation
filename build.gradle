@@ -10,7 +10,7 @@ plugins {
     id 'jp.classmethod.aws.reboot.cloudformation' version '0.45'
 }
 
-version = "0.0.3"
+version = "0.0.1"
 
 
 repositories {
@@ -57,7 +57,7 @@ String group = "999"
 dockerRun {
     name 'spring-boot-operation'
     image imageName
-    ports '8080:8080'
+    ports '5000:5000'
     clean true
   //  daemonize false
    // arguments '-v', '/var/run/docker.sock:/var/run/docker.sock', '--group-add', group
@@ -87,7 +87,7 @@ jar {
 
     }
     baseName = 'spring-angular'
-    version = '0.0.3-SNAPSHOT'
+    version = '0.0.1-SNAPSHOT'
     from('frontend/dist/angular-frontend-books') {
         into 'public'
     }

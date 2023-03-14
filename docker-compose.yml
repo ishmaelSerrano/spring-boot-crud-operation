@@ -1,12 +1,12 @@
 version: "3.9"
 services:
   backend:
-    image: ismaelcontrast/spring-boot-crud-operation:0.0.3
+    image: ismaelcontrast/spring-boot-crud-operation:0.0.1
     container_name: spring-boot-operation
     build:
       context: ./
     ports:
-      - "8080:8080"
+      - "5000:5000"
   frontend:
     image: angular-frontend-books
     container_name: angular-frontend-books

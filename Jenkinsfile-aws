@@ -1,50 +1,41 @@
-def VERSION = "0.0.1"
-def DIST_ARCHIVE = "dist.0.0.1"
-def S3_BUCKET = 'spring-boot-angular'
-
 pipeline {
     agent any
-    tools { nodejs "Angular Project" }
 
+    triggers {
+        pollSCM '* * * * *'
+    }
     stages {
-        stage('NPM Install') {
-            steps {
-                script {
-                    notifyBitbucket(buildStatus: 'INPROGRESS')
-                }
-                sh 'npm install --verbose -d'
-            }
-        }
-
         stage('Build') {
             steps {
-                sh 'npm run build'
+                sh './gradlew assemble'
             }
         }
-        stage('Archive') {
+        stage('Test') {
             steps {
-              sh "cd frontend/dist/angular-frontend-books && zip -r ../app.zip . && cd .."
-              archiveArtifacts artifacts: "app.zip", fingerprint: true
+                sh './gradlew test'
             }
         }
-        stage('Deploy') {
+        stage('Build Docker image') {
             steps {
-                sh "aws s3 cp app.zip s3://spring-boot-angular/app.zip --profile=default"
-                sh "aws deploy create-deployment --application-name Angular --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name angular-deployment-group --s3-location bucket=spring-boot-angular,bundleType=zip,key=app.zip"
+                sh './gradlew docker'
             }
         }
-    }
-
-    post {
-        always {
-            script {
-                currentBuild.result = currentBuild.result ?: 'SUCCESS'
-                notifyBitbucket()
-
-                if (currentBuild.result == 'SUCCESS') {
-                  echo 'notify slack'
-                } else {
-                  echo 'notify slack'
+        stage('Push Docker image') {
+            environment {
+                DOCKER_HUB_LOGIN = credentials('docker-hub')
+            }
+            steps {
+                sh 'docker login --username=$DOCKER_HUB_LOGIN_USR --password=$DOCKER_HUB_LOGIN_PSW'
+                sh './gradlew dockerPush -PdockerHubUsername=$DOCKER_HUB_LOGIN_USR'
+            }
+        }
+        stage('Deploy to AWS') {
+            environment {
+                DOCKER_HUB_LOGIN = credentials('docker-hub')
+            }
+            steps {
+                withAWS(credentials: 'aws-credentials', region: env.AWS_REGION) {
+                    sh './gradlew awsCfnMigrateStack awsCfnWaitStackComplete -PsubnetId=$SUBNET_ID -PdockerHubUsername=$DOCKER_HUB_LOGIN_USR'
                 }
             }
         }

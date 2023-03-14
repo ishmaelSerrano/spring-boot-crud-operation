@@ -15,7 +15,7 @@ import java.util.Optional;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@CrossOrigin(origins = "http://spring-boot-angular.s3-website-us-east-1.amazonaws.com/")
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api")
 public class BooksController

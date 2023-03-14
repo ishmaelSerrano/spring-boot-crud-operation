@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Book } from '../models/book';
 
-const baseUrl = "http://springbootcrudoperationapp-env-1.eba-gpga348p.us-east-1.elasticbeanstalk.com/api/book";
-const baseUrlsave = "http://springbootcrudoperationapp-env-1.eba-gpga348p.us-east-1.elasticbeanstalk.com/api/books";
+const baseUrl = "http://localhost:8080/api/book";
+const baseUrlsave = "http://localhost:8080/api/books";
 
 @Injectable({
   providedIn: 'root'

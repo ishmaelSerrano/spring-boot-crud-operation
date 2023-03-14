@@ -1,66 +1,52 @@
-buildscript {
-    repositories {
-        mavenCentral()
+def VERSION = "0.0.1"
+def DIST_ARCHIVE = "dist.0.0.1"
+def S3_BUCKET = 'spring-boot-angular'
+
+pipeline {
+    agent any
+    tools { nodejs "Angular Project" }
+
+    stages {
+        stage('NPM Install') {
+            steps {
+                script {
+                    notifyBitbucket(buildStatus: 'INPROGRESS')
+                }
+                sh 'npm install --verbose -d'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'npm run build'
+            }
+        }
+        stage('Archive') {
+            steps {
+              sh "cd frontend/dist/angular-frontend-books && zip -r ../app.zip . && cd .."
+              archiveArtifacts artifacts: "app.zip", fingerprint: true
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh "aws s3 cp app.zip s3://spring-boot-angular/app.zip --profile=default"
+                sh "aws deploy create-deployment --application-name Angular --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name angular-deployment-group --s3-location bucket=spring-boot-angular,bundleType=zip,key=app.zip"
+            }
+        }
     }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.5.5")
-        classpath("com.amazonaws:aws-java-sdk:1.11.1039")
-        classpath("org.springframework.cloud:spring-cloud-aws-messaging:2.3.2")
-        classpath("org.springframework.cloud:spring-cloud-aws-autoconfigure:2.3.2")
+
+    post {
+        always {
+            script {
+                currentBuild.result = currentBuild.result ?: 'SUCCESS'
+                notifyBitbucket()
+
+                if (currentBuild.result == 'SUCCESS') {
+                  echo 'notify slack'
+                } else {
+                  echo 'notify slack'
+                }
+            }
+        }
     }
-}
-
-plugins {
-    id 'java'
-    id 'org.springframework.boot' version '2.5.5'
-    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-}
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.cloud:spring-cloud-starter-aws'
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.webjars:webjars-locator-core'
-    implementation 'org.webjars:bootstrap:4.6.0'
-    implementation 'org.webjars:jquery:3.6.0'
-    implementation 'com.amazonaws:aws-java-sdk-s3:1.11.1039'
-    implementation 'com.amazonaws:aws-java-sdk-rds:1.11.1039'
-    implementation 'com.amazonaws:aws-java-sdk-elasticbeanstalk:1.11.1039'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-}
-
-bootJar {
-    baseName = 'SpringBootCrudOperationApplication'
-    version = '0.0.1-SNAPSHOT'
-}
-
-bootRun {
-    systemProperty 'spring.profiles.active', 'local'
-}
-
-task buildZip(type: Zip) {
-    from("build/libs/") {
-        include "spring-boot-crud-operation-0.0.1.jar"
-    }
-    from("Dockerrun.aws.json")
-    archiveName "my-app.zip"
-}
-
-task deployToS3(type: Exec) {
-    commandLine 'aws', 's3', 'cp', 'frontend/build/dist/app.zip', 's3://spring-boot-angular/'
-}
-
-task deployToElasticBeanstalk(type: Exec) {
-    commandLine 'aws', 'elasticbeanstalk', 'create-application-version', '--application-name', 'spring-boot-crud-operation', '--version-label', '0.0.1-SNAPSHOT', '--source-bundle', 'S3Bucket=spring-boot-angular,S3Key=app.zip'
-}
-
-
-
-task deployToAWS(dependsOn: [buildZip, deployToS3, deployToElasticBeanstalk]) {
 }

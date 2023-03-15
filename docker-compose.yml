@@ -6,7 +6,7 @@ services:
     build:
       context: ./
     ports:
-      - "5000:5000"
+      - "8080:8080"
   frontend:
     image: angular-frontend-books
     container_name: angular-frontend-books

@@ -1,0 +1,5 @@
+com/ishmael/springbootcrudoperation/controller/BooksController.class
+com/ishmael/springbootcrudoperation/SpringBootCrudOperationApplication.class
+com/ishmael/springbootcrudoperation/repository/BooksRepository.class
+com/ishmael/springbootcrudoperation/model/Books.class
+com/ishmael/springbootcrudoperation/service/BooksService.class

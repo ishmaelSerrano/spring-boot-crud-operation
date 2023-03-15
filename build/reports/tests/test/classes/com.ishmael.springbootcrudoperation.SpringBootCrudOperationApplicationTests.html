@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - SpringBootCrudOperationApplicationTests</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>SpringBootCrudOperationApplicationTests</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/com.ishmael.springbootcrudoperation.html">com.ishmael.springbootcrudoperation</a> &gt; SpringBootCrudOperationApplicationTests</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">5</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.277s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">contextLoads()</td>
+<td class="success">0.003s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">getAllBooks()</td>
+<td class="success">0.208s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">getSaveBook()</td>
+<td class="success">0.049s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">getsSingleBook()</td>
+<td class="success">0.009s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">returnsNotFoundForInvalidSingleRide()</td>
+<td class="success">0.008s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>16:13:33.911 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating CacheAwareContextLoaderDelegate from class [org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate]
+16:13:33.921 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating BootstrapContext using constructor [public org.springframework.test.context.support.DefaultBootstrapContext(java.lang.Class,org.springframework.test.context.CacheAwareContextLoaderDelegate)]
+16:13:33.949 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating TestContextBootstrapper for test class [com.ishmael.springbootcrudoperation.SpringBootCrudOperationApplicationTests] from class [org.springframework.boot.test.context.SpringBootTestContextBootstrapper]
+16:13:33.958 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.ishmael.springbootcrudoperation.SpringBootCrudOperationApplicationTests], using SpringBootContextLoader
+16:13:33.961 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [com.ishmael.springbootcrudoperation.SpringBootCrudOperationApplicationTests]: class path resource [com/ishmael/springbootcrudoperation/SpringBootCrudOperationApplicationTests-context.xml] does not exist
+16:13:33.961 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [com.ishmael.springbootcrudoperation.SpringBootCrudOperationApplicationTests]: class path resource [com/ishmael/springbootcrudoperation/SpringBootCrudOperationApplicationTestsContext.groovy] does not exist
+16:13:33.961 [Test worker] INFO org.springframework.test.context.support.AbstractContextLoader - Could not detect default resource locations for test class [com.ishmael.springbootcrudoperation.SpringBootCrudOperationApplicationTests]: no resource found for suffixes {-context.xml, Context.groovy}.
+16:13:33.962 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.ishmael.springbootcrudoperation.SpringBootCrudOperationApplicationTests]: SpringBootCrudOperationApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+16:13:34.016 [Test worker] DEBUG org.springframework.test.context.support.ActiveProfilesUtils - Could not find an 'annotation declaring class' for annotation type [org.springframework.test.context.ActiveProfiles] and class [com.ishmael.springbootcrudoperation.SpringBootCrudOperationApplicationTests]
+16:13:34.061 [Test worker] DEBUG org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider - Identified candidate component class: file [/Users/ishmaelserrano/repos/spring-boot-crud-operation/build/classes/java/main/com/ishmael/springbootcrudoperation/SpringBootCrudOperationApplication.class]
+16:13:34.062 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.ishmael.springbootcrudoperation.SpringBootCrudOperationApplication for test class com.ishmael.springbootcrudoperation.SpringBootCrudOperationApplicationTests
+16:13:34.133 [Test worker] DEBUG org.springframework.boot.test.context.SpringBootTestContextBootstrapper - @TestExecutionListeners is not present for class [com.ishmael.springbootcrudoperation.SpringBootCrudOperationApplicationTests]: using defaults.
+16:13:34.133 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
+16:13:34.158 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@50b0bc4c, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@c20be82, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@13c612bd, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@3ef41c66, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@6b739528, org.springframework.test.context.support.DirtiesContextTestExecutionListener@622ef26a, org.springframework.test.context.transaction.TransactionalTestExecutionListener@41de5768, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@5f577419, org.springframework.test.context.event.EventPublishingTestExecutionListener@28fa700e, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@3d526ad9, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@e041f0c, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@6a175569, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@11963225, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@3f3c966c, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@11ee02f8]
+16:13:34.161 [Test worker] DEBUG org.springframework.test.context.support.AbstractDirtiesContextTestExecutionListener - Before test class: context [DefaultTestContext@1bb9aa43 testClass = SpringBootCrudOperationApplicationTests, testInstance = [null], testMethod = [null], testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@420bc288 testClass = SpringBootCrudOperationApplicationTests, locations = '{}', classes = '{class com.ishmael.springbootcrudoperation.SpringBootCrudOperationApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@ea9b7c6, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@4b3fa0b3, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@1080b026, [ImportsContextCustomizer@df5f5c0 key = [org.springframework.boot.test.autoconfigure.web.servlet.MockMvcAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcWebClientAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcWebDriverAutoConfiguration, org.springframework.boot.autoconfigure.security.oauth2.client.servlet.OAuth2ClientAutoConfiguration, org.springframework.boot.autoconfigure.security.oauth2.resource.servlet.OAuth2ResourceServerAutoConfiguration, org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration, org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration, org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcSecurityConfiguration, org.springframework.boot.test.autoconfigure.web.reactive.WebTestClientAutoConfiguration]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@30f5a68a, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@24d4d7c9, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@e8c738f5, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@3234f74e, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@7905a0b8], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -&gt; true]], class annotated with @DirtiesContext [false] with mode [null].
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v2.7.8)
+
+2023-03-05 16:13:34.442  INFO 5039 --- [    Test worker] .SpringBootCrudOperationApplicationTests : Starting SpringBootCrudOperationApplicationTests using Java 11.0.16.1 on ISERRANO-C02GC05NMD6T with PID 5039 (started by ishmaelserrano in /Users/ishmaelserrano/repos/spring-boot-crud-operation)
+2023-03-05 16:13:34.444  INFO 5039 --- [    Test worker] .SpringBootCrudOperationApplicationTests : No active profile set, falling back to 1 default profile: &quot;default&quot;
+2023-03-05 16:13:35.157  INFO 5039 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-03-05 16:13:35.194  INFO 5039 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 30 ms. Found 1 JPA repository interfaces.
+2023-03-05 16:13:36.000  INFO 5039 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-03-05 16:13:36.173  INFO 5039 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-03-05 16:13:36.234  INFO 5039 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-03-05 16:13:36.276  INFO 5039 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.14.Final
+2023-03-05 16:13:36.310  INFO 5039 --- [    Test worker] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-03-05 16:13:36.408  INFO 5039 --- [    Test worker] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2023-03-05 16:13:36.774  INFO 5039 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-03-05 16:13:36.779  INFO 5039 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-03-05 16:13:36.996  WARN 5039 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-03-05 16:13:37.352  INFO 5039 --- [    Test worker] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:books_data'
+2023-03-05 16:13:37.360  INFO 5039 --- [    Test worker] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
+2023-03-05 16:13:37.797  INFO 5039 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-03-05 16:13:37.797  INFO 5039 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-03-05 16:13:37.805  INFO 5039 --- [    Test worker] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2023-03-05 16:13:37.831  INFO 5039 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 34 ms
+2023-03-05 16:13:37.870  INFO 5039 --- [    Test worker] .SpringBootCrudOperationApplicationTests : Started SpringBootCrudOperationApplicationTests in 3.68 seconds (JVM running for 4.756)
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 7.6</a> at 5 Mar 2023, 16:13:38</p>
+</div>
+</div>
+</body>
+</html>
